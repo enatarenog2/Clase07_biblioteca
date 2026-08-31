@@ -1,3 +1,8 @@
+# Alumnos:                                     Carnet: 
+Edward Meyer Natareno Garcia                   0905-25-21314
+Fatima Jacinta Montoya Aguilar                 0905-25-24221
+Jose YAir Hernandez Valenzuela                 0905-25-6079
+
 # Clase 7 - Biblioteca (JDBC con relacion 1:N) — Actividad de clase
 
 Repaso directo de la Clase 5 (`clase05-jdbc-con-maven`): mismo patron de DAO,
