@@ -12,12 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * DAO de libros. Es literalmente el mismo patron de EstudianteDAO (Clase 5):
- * un metodo por operacion, cada uno abre y cierra su propia conexion con
- * try-with-resources. Si ya entendiste EstudianteDAO, este archivo es puro
- * repaso - lo unico que cambia son los nombres de columnas y de la tabla.
- */
 public class LibroDAO {
 
     private static final String URL = "jdbc:mysql://localhost:3306/prog2_db?useSSL=false&serverTimezone=UTC";
@@ -74,6 +68,26 @@ public class LibroDAO {
                 return Optional.empty();
             }
         }
+    }
+
+    public List<Libro> obtenerLibrosNuncaPrestados() throws SQLException {
+        String sql = "SELECT l.id, l.titulo, l.autor, l.isbn " +
+                     "FROM libros l " +
+                     "LEFT JOIN prestamos p ON l.id = p.libro_id " +
+                     "WHERE p.id IS NULL " +
+                     "ORDER BY l.id";
+
+        List<Libro> libros = new ArrayList<>();
+
+        try (Connection conexion = DriverManager.getConnection(URL, USUARIO, PASSWORD);
+             PreparedStatement statement = conexion.prepareStatement(sql);
+             ResultSet resultado = statement.executeQuery()) {
+
+            while (resultado.next()) {
+                libros.add(mapearFila(resultado));
+            }
+        }
+        return libros;
     }
 
     private Libro mapearFila(ResultSet resultado) throws SQLException {
