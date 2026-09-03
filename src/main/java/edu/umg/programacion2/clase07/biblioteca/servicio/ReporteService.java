@@ -71,11 +71,30 @@ public class ReporteService {
      * colecciones: por cada PrestamoDetalle, revisa si su titulo ya esta en
      * el mapa (si SI, suma 1; si NO, agregalo con valor 1).
      */
-    public Map<String, Integer> contarPrestamosActivosPorTitulo() throws SQLException {
-        Map<String, Integer> conteo = new HashMap<>();
-        List<PrestamoDetalle> activos = prestamoDAO.listarPrestamosActivosConLibro();
+    
         // TODO: recorrer "activos" y llenar "conteo" usando getTituloLibro() como llave.
-
-        return conteo;
+        public Map<String, Integer> contarPrestamosActivosPorTitulo() throws SQLException {
+            Map<String, Integer> conteo = new HashMap<>();
+            
+            // TODO: recorrer "activos" y llenar "conteo" usando getTituloLibro() como llave.
+            
+            // Pista: Consigue la lista de préstamos activos
+            List<PrestamoDetalle> activos = prestamoDAO.listarPrestamosActivosConLibro();
+            
+            // Recorremos la lista de activos
+            for (PrestamoDetalle detalle : activos) {
+                String titulo = detalle.getTituloLibro();
+                
+                // Lógica del contador: si el título ya está en el mapa, suma 1; si no, lo agrega con valor inicial 1
+                if (conteo.containsKey(titulo)) {
+                    conteo.put(titulo, conteo.get(titulo) + 1);
+                } else {
+                    conteo.put(titulo, 1);
+                }
+            }
+            
+            return conteo;
+        
+       
     }
 }
