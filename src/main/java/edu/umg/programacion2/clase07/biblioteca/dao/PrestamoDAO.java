@@ -26,7 +26,7 @@ public class PrestamoDAO {
 
     private static final String URL = "jdbc:mysql://localhost:3306/prog2_db?useSSL=false&serverTimezone=UTC";
     private static final String USUARIO = "root";
-    private static final String PASSWORD = "carro210";
+    private static final String PASSWORD = "tu_contraseña";
 
     // Repaso: INSERT con generated keys, igual que EstudianteDAO.crear().
     public int registrarPrestamo(Prestamo prestamo) throws SQLException {
@@ -96,57 +96,32 @@ public class PrestamoDAO {
      * 4. Agregalo a una List<PrestamoDetalle> y devuelvela al final.
      */
     public List<PrestamoDetalle> listarPrestamosActivosConLibro() throws SQLException {
-    	List<PrestamoDetalle> resultado = new ArrayList<>();
-    	// TODO: ejecutar la consulta con JOIN descrita arriba y llenar "resultado".
-    	String sql = "SELECT p.id, p.usuario, p.fecha_prestamo, l.titulo, l.autor, l.isbn " +
-                "FROM prestamos p " +
-                "JOIN libros l ON p.libro_id = l.id " +
-                "WHERE p.fecha_devolucion IS NULL " +
-                "ORDER BY p.fecha_prestamo";
-    	try (Connection conexion = DriverManager.getConnection(URL, USUARIO, PASSWORD);
+    	 List<PrestamoDetalle> resultado = new ArrayList<>();
+
+    	    String sql = "SELECT p.nombre_estudiante, p.fecha_prestamo, l.titulo " +
+    	                 "FROM prestamos p " +
+    	                 "JOIN libros l ON p.libro_id = l.id " +
+    	                 "WHERE p.fecha_devolucion IS NULL " +
+    	                 "ORDER BY p.fecha_prestamo";
+
+    	    try (Connection conexion = DriverManager.getConnection(URL, USUARIO, PASSWORD);
     	         PreparedStatement statement = conexion.prepareStatement(sql);
     	         ResultSet data = statement.executeQuery()) {
 
     	        while (data.next()) {
-    	            // Aquí SÍ se agrega el objeto creado
     	            resultado.add(mapearFila(data));
     	        }
     	    }
 
-    	    // Imprimir UNA SOLA VEZ fuera del bucle
-    	    System.out.println("Lista de préstamos encontrados: " + resultado);
-    	    
-    	    return resultado; 
+    	    return resultado;
     	}
-    public List<PrestamoDetalle> listarPrestamosActivosConLibro1() throws SQLException {
-        List<PrestamoDetalle> resultado = new ArrayList<>();
-        
-        // La consulta correcta: solo préstamos activos y con JOIN
-        String sql = "SELECT p.usuario, l.titulo, p.fecha_prestamo " +
-                     "FROM prestamos p " +
-                     "JOIN libros l ON p.libro_id = l.id " +
-                     "WHERE p.fecha_devolucion IS NULL " +
-                     "ORDER BY p.fecha_prestamo";
-
-        try (Connection conexion = DriverManager.getConnection(URL, USUARIO, PASSWORD);
-             PreparedStatement statement = conexion.prepareStatement(sql);
-             ResultSet data = statement.executeQuery()) {
-
-            while (data.next()) {
-                resultado.add(mapearFila(data));
-            }
-        }
-        
-        return resultado; 
-    }
+    
+    
     private PrestamoDetalle mapearFila(ResultSet resultado) throws SQLException {
-
         return new PrestamoDetalle(
             resultado.getString("titulo"),
-            resultado.getString("usuario"),
+            resultado.getString("nombre_estudiante"),
             resultado.getDate("fecha_prestamo").toLocalDate().toString()
         );
-
     }
-   
 }

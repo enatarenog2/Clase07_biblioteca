@@ -16,7 +16,7 @@ public class LibroDAO {
 
     private static final String URL = "jdbc:mysql://localhost:3306/prog2_db?useSSL=false&serverTimezone=UTC";
     private static final String USUARIO = "root";
-    private static final String PASSWORD = "carro210";
+    private static final String PASSWORD = "admin";
     
 
     public int crear(Libro libro) throws SQLException {
