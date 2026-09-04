@@ -14,14 +14,14 @@ public class Prestamo {
 
     private int id;
     private int libroId;
-    private String nombreEstudiante;
+    private String usuario;
     private String fechaPrestamo;
     private LocalDate fechaDevolucion;
 
-    public Prestamo(int id, int libroId, String nombreEstudiante, String fechaPrestamo, LocalDate fechaDevolucion) {
+    public Prestamo(int id, int libroId, String usuario, String fechaPrestamo, LocalDate fechaDevolucion) {
         this.id = id;
         this.libroId = libroId;
-        this.nombreEstudiante = nombreEstudiante;
+        this.usuario = usuario;
         this.fechaPrestamo = fechaPrestamo;
         this.fechaDevolucion = fechaDevolucion;
     }
@@ -40,8 +40,8 @@ public class Prestamo {
         return libroId;
     }
 
-    public String getNombreEstudiante() {
-        return nombreEstudiante;
+    public String getUsuario() {
+        return usuario;
     }
 
     public String getFechaPrestamo() {
@@ -62,6 +62,7 @@ public class Prestamo {
     public String toString() {
         String estado = esActivo() ? "ACTIVO" : "devuelto " + fechaDevolucion;
         return String.format("[%d] libro #%d - %s (prestado %s, %s)",
-                id, libroId, nombreEstudiante, fechaPrestamo, estado);
+                id, libroId, usuario, fechaPrestamo, estado);
     }
 }
+

@@ -174,12 +174,12 @@ public class Main {
     }
 
     private static void reporteLibrosNuncaPrestados() {
-        try {
-            Set<Libro> libros = reporteService.librosNuncaPrestados();
-            System.out.println(libros);
-        } catch (SQLException e) {
-            System.err.println("Error al generar el reporte: " + e.getMessage());
-        }
+    	  try {
+    	        List<Libro> libros = reporteService.librosNuncaPrestados();
+    	        System.out.println(libros);
+    	    } catch (SQLException e) {
+    	        System.err.println("Error al generar el reporte: " + e.getMessage());
+    	    }
     }
 
     private static void reporteConteoPorTitulo() {
